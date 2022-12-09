@@ -1,5 +1,5 @@
 const { app, Tray, Menu, nativeImage } = require("electron");
-const fs = require("fs");
+const nf = require("node-fetch");
 const cp = require("child_process");
 
 let tray;
@@ -7,7 +7,8 @@ let tray;
 app.whenReady().then(() => {
   const offIcon = nativeImage.createFromPath("/usr/share/icons/server_off.png");
   const onIcon = nativeImage.createFromPath("/usr/share/icons/server_on.png");
-  const statusFilePath = "/etc/server-status";
+  const statusUrl =
+    "http://arbeglanretsc.chickenkiller.com/__servercheck__/check.txt";
   const wakeCommand = "/home/david/.bin/wakehome";
   const shutdownCommand = "/home/david/.bin/shutdownhome";
   const restartCommand = "/home/david/.bin/reboothome";
@@ -28,17 +29,18 @@ app.whenReady().then(() => {
   };
 
   const checkStatus = () => {
-    fs.readFile(statusFilePath, "utf-8", (err, data) => {
-      if (err) {
-        tray.setImage(offIcon);
-      } else {
-        if (data === "UP") {
+    nf(statusUrl)
+      .then((res) => res.text())
+      .then((text) => {
+        if (text === "online\n") {
           tray.setImage(onIcon);
         } else {
           tray.setImage(offIcon);
         }
-      }
-    });
+      })
+      .catch(() => {
+        tray.setImage(offIcon);
+      });
   };
 
   setInterval(() => {
