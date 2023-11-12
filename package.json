@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "description": "Application to manager server status",
   "main": "main.js",
+  "maintainers": ["David Christa"],
   "scripts": {
     "start": "electron-forge start",
     "test": "echo \"Error: no test specified\" && exit 1",

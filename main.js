@@ -8,7 +8,7 @@ app.whenReady().then(() => {
   const offIcon = nativeImage.createFromPath("/usr/share/icons/server_off.png");
   const onIcon = nativeImage.createFromPath("/usr/share/icons/server_on.png");
   const statusUrl =
-    "http://arbeglanretsc.chickenkiller.com/__servercheck__/check.txt";
+    "http://arbeglanretsc.duckdns.org/__servercheck__/check.txt";
   const wakeCommand = "/home/david/.bin/wakehome";
   const shutdownCommand = "/home/david/.bin/shutdownhome";
   const restartCommand = "/home/david/.bin/reboothome";
